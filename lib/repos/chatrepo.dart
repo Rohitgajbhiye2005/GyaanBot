@@ -2,25 +2,24 @@ import 'package:dio/dio.dart';
 import 'package:gyaanbot/model/chatmodel.dart';
 
 class ChatRepo {
-  // Replace with your actual API key
-  static const String _apiKey = 'AIzaSyB6dkwGn0ojUDXuQUORu5qDxruBUEhxHC0'; // Get from https://aistudio.google.com/app/apikey
+
+  static const String _apiKey = 'YOUR_API_KEY'; 
   
   static final Dio _dio = Dio();
 
   static Future<String?> chatTextGenerationRepo(List<Chatmodel> messages) async {
-    // Use the correct endpoint for Gemini 1.5 Flash (current recommended model)
+  
     const String baseUrl = 'https://generativelanguage.googleapis.com/v1beta/models';
-    const String model = 'gemini-1.5-flash'; // Updated model name
+    const String model = 'gemini-1.5-flash';
     
     try {
-      // Validate messages
       if (messages.isEmpty || messages.any((m) => m.role != 'user' && m.role != 'model')) {
         throw Exception('Invalid message format');
       }
 
       final response = await _dio.post(
         '$baseUrl/$model:generateContent',
-        queryParameters: {'key': _apiKey}, // Pass key as query parameter
+        queryParameters: {'key': _apiKey},
         options: Options(
           headers: {'Content-Type': 'application/json'},
         ),
@@ -41,7 +40,7 @@ class ChatRepo {
         },
       );
 
-      // Parse response
+  
       final text = response.data['candidates']?[0]['content']?['parts']?[0]['text'];
       return text?.toString();
       
