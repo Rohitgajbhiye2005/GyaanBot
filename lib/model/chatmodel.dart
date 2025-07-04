@@ -1,28 +1,26 @@
 import 'dart:convert';
 
 class Chatmodel {
-  /// The role of the message sender - must be either 'user' or 'model'
-  final String role;
   
-  /// List of content parts (currently only text is supported)
+  final String role;
   final List<ChatPart> parts;
 
   Chatmodel({
     required this.role,
     required this.parts,
   }) {
-    // Validate role
+
     if (role != 'user' && role != 'model') {
       throw ArgumentError('Role must be either "user" or "model"');
     }
     
-    // Validate parts
+
     if (parts.isEmpty) {
       throw ArgumentError('Parts cannot be empty');
     }
   }
 
-  /// Creates a user message (convenience factory)
+
   factory Chatmodel.userMessage(String text) {
     return Chatmodel(
       role: 'user',
@@ -30,7 +28,7 @@ class Chatmodel {
     );
   }
 
-  /// Creates a model message (convenience factory)
+
   factory Chatmodel.modelMessage(String text) {
     return Chatmodel(
       role: 'model',
